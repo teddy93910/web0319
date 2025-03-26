@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>web0319Practice</title>
+    <script type="module">
+        import 'https://unpkg.com/wired-elements?module';
+    </script>
+</head>
+<body>
+
+<label for="file">Downloading progress:</label>
+<progress id="file" value="0" max="100"> 0% </progress>
+<button id="load">load</button>
+
+<!-- 這裡才是放 <wired-image> 的地方 -->
+<wired-image src="https://images.chinatimes.com/newsphoto/2023-01-29/1024/20230129000653.jpgs"></wired-image>
+
+<script>
+    let progress = 0;
+
+    function move() {
+        if (progress === 0) {
+            progress = 1;
+            const elem = document.getElementById("file");
+            let width = 1;
+            const id = setInterval(frame, 10);
+
+            function frame() {
+                if (width >= 100) {
+                    clearInterval(id);
+                    progress = 0;
+                } else {
+                    width++;
+                    elem.value = width;
+                    elem.innerText = width + "%";
+                }
+            }
+        }
+    }
+
+    document.getElementById("load").addEventListener("click", move);
+</script>
+
+</body>
+</html>
